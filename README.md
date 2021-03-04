@@ -1,6 +1,8 @@
 # File
-Code còn nhiều thiếu sót , mong mọi người góp ý
+Code còn nhiều thiếu sót , mong mọi người góp ý 
+
 Nội dung :
+
 Đọc viết File trong C
 Cho file văn bản có cấu trúc, lưu thông tin IRIS (“iris.data”) dạng văn bản như sau:
 150: số đối tượng lưu trong file.
