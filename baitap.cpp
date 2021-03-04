@@ -1,3 +1,4 @@
+//Code con nhieu thieu sot mong moi nguoi gop y
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
