@@ -45,6 +45,7 @@ void HienThiDuLieu()
 {
     system("cls");
     printf("\nSo phan tu : %d\n", N);
+    printf("   Sepal Length     Sepal Width     Petal Length    Petal Width            Class\n");
     for (int i = 0; i < N; i++)
     {
         printf("\t%0.1f\t\t%0.1f\t\t%0.1f\t\t%0.1f\t\t%s\n",
