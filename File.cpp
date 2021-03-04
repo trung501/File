@@ -6,7 +6,6 @@ typedef struct Iris
 {
     float sepalLength, sepalWidth, petalLength, petalWidth;
     char cls[20];
-
 } Iris;
 Iris *iris;
 int N;
@@ -45,21 +44,21 @@ void HienThiDuLieu()
 {
     system("cls");
     printf("\nSo phan tu : %d\n", N);
-    printf("   Sepal Length     Sepal Width     Petal Length    Petal Width            Class\n");
+    printf("  STT      Sepal Length     Sepal Width     Petal Length    Petal Width            Class\n");
     for (int i = 0; i < N; i++)
     {
-        printf("\t%0.1f\t\t%0.1f\t\t%0.1f\t\t%0.1f\t\t%s\n",
+        printf("   %d\t\t%0.1f\t\t%0.1f\t\t%0.1f\t\t%0.1f\t\t%s\n", i + 1,
                (iris + i)->sepalLength,
                (iris + i)->sepalWidth,
                (iris + i)->petalLength,
                (iris + i)->petalWidth,
                (iris + i)->cls);
     }
-    printf("An phim bat ky de thoat\n ");
-    fflush(stdin);
-    getch();
+    //printf("An phim bat ky de thoat\n ");
+    //fflush(stdin);
+    //getch();
 }
-int writeFile()
+bool writeFile()
 {
     char iris_setosa[20] = "Iris-setosa";
     char iris_versicolo[20] = "Iris-versicolor";
@@ -90,7 +89,7 @@ int writeFile()
         scanf("%f", &(irs->sepalLength));
         if (irs->sepalLength == 0.0)
         {
-           break;
+            break;
         }
         printf("\nNhap Sepal Width :");
         scanf("%f", &(irs->sepalWidth));
@@ -122,7 +121,12 @@ int writeFile()
         fseek(fp, 0, SEEK_SET);
         fprintf(fp, "%d\r", i);
         fseek(fp, 0, SEEK_END);
-        fprintf(fp, "%0.1f,%0.1f,%0.1f,%0.1f,%s\r", irs->sepalLength, irs->sepalWidth, irs->petalLength, irs->petalWidth, irs->cls);
+        fprintf(fp, "%0.1f,%0.1f,%0.1f,%0.1f,%s\r",
+                irs->sepalLength,
+                irs->sepalWidth,
+                irs->petalLength,
+                irs->petalWidth,
+                irs->cls);
         system("cls");
         printf("Them du lieu thanh cong.\n");
         printf("Update du lieu :\n");
@@ -158,6 +162,83 @@ void writeFileBinary()
     fflush(stdin);
     getch();
 }
+bool chinhSuaDuLieu()
+{
+    system("cls");
+    HienThiDuLieu();
+    char iris_setosa[20] = "Iris-setosa";
+    char iris_versicolo[20] = "Iris-versicolor";
+    char iris_virginica[20] = "Iris-virginica";
+    FILE *fp;
+    int a;
+
+    while (true)
+    {
+        int n;
+        printf("\nNhap dong can chinh sua:");
+        printf("\nNhap 0 de thoat\n");
+        scanf("%d", &n);
+        if (n == 0)
+        {
+            break;
+        }
+        printf("\nNhap cac thong so vao de chinh sua file");
+        printf("\nNhap Sepal Length :");
+        scanf("%f", &((iris + n - 1)->sepalLength));
+        printf("\nNhap Sepal Width :");
+        scanf("%f", &((iris + n - 1)->sepalWidth));
+        printf("\nNhap Petal Length :");
+        scanf("%f", &((iris + n - 1)->petalLength));
+        printf("\nNhap Petal Width :");
+        scanf("%f", &((iris + n - 1)->petalWidth));
+
+        printf("\nChon Class:");
+        printf("\n1:  Iris Setosa");
+        printf("\n2:  Iris Versicolour");
+        printf("\n3:  Iris Virginica");
+        printf("\n");
+        scanf("%d", &a);
+        char s[30];
+        if (a == 1)
+        {
+            strcpy((iris + n - 1)->cls, iris_setosa);
+        }
+        else if (a == 2)
+        {
+            strcpy((iris + n - 1)->cls, iris_versicolo);
+        }
+        else
+        {
+            strcpy((iris + n - 1)->cls, iris_virginica);
+        }
+        system("cls");
+        printf("Sua du lieu thanh cong.\n");
+        printf("Update du lieu :\n");
+        printf("1: Co\n");
+        printf("2: Chinh sua du lieu tiep\n");
+        int addFile;
+        scanf("%d", &addFile);
+        if (addFile == 1)
+        {
+            break;
+        }
+        system("cls");
+    }
+    
+    fp = fopen("iris.data", "w");
+    fprintf(fp, "%d\n", N);
+    for ( int i=0;i<N;++i){
+        fprintf(fp, "%0.1f,%0.1f,%0.1f,%0.1f,%s\r",
+                (iris+i)->sepalLength,
+                (iris+i)->sepalWidth,
+                (iris+i)->petalLength,
+                (iris+i)->petalWidth,
+                (iris+i)->cls);
+    }
+    fclose(fp);
+    return true;
+}
+
 int main()
 {
     bool check = Update();
@@ -175,7 +256,8 @@ int main()
         printf("1 : Update\n");
         printf("2 : Hien Thi Du lieu\n");
         printf("3 : Them du lieu vao File\n");
-        printf("4 : Ghi File nhi phan\n");
+        printf("4 : Chinh sua du lieu\n");
+        printf("5 : Ghi File nhi phan\n");
         printf("0 : Thoat\n");
         scanf("%d", &n);
         if (n == 1)
@@ -194,6 +276,9 @@ int main()
         else if (n == 2)
         {
             HienThiDuLieu();
+            printf("An phim bat ky de thoat\n ");
+            fflush(stdin);
+            getch();
             system("cls");
         }
         else if (n == 3)
@@ -203,6 +288,16 @@ int main()
         }
         else if (n == 4)
         {
+            check = chinhSuaDuLieu();
+            if (!check)
+            {
+                printf("Chinh sua khong thanh cong\n");
+            }
+            fflush(stdin);
+            system("cls");
+        }
+        else if (n == 5)
+        {
             writeFileBinary();
             system("cls");
         }
@@ -211,7 +306,6 @@ int main()
             return 0;
         }
     }
-    return 0;
     free(iris);
     return 0;
 }
