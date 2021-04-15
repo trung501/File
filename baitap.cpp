@@ -1,4 +1,5 @@
 //Code con nhieu thieu sot mong moi nguoi gop y
+//TRUNG TRAN
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
